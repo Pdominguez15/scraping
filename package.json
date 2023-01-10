@@ -1,0 +1,15 @@
+{
+  "name": "scraping-telegram-bot",
+  "version": "1.0.0",
+  "description": "Scrape a product website check stock and send availability via telegram",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "Pedro Domínguez Aguilera",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-cron": "^3.0.2",
+    "node-fetch": "^3.3.0"
+  }
+}
