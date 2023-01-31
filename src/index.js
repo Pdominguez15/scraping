@@ -1,16 +1,13 @@
 import { Router } from "itty-router";
 import {
   connectionBD,
+  deleteProduct,
   disconnectBD,
   getDataFromBD,
   insertProduct,
 } from "../bd/connection";
-import {
-  getData,
-  isUrlValid,
-  scraping,
-  sendMessageToTelegramBot,
-} from "../helpers";
+
+import { getData, isUrlValid, scraping, sendNotification } from "../helpers";
 
 const router = Router();
 
@@ -28,7 +25,13 @@ router.post("/getData", async (request) => {
 router.post("/sendData", async (request) => {
   const product = await request.json();
 
-  if (!product?.url || !product?.size || !product?.store || !product?.name) {
+  if (
+    !product?.url ||
+    !product?.size ||
+    !product?.store ||
+    !product?.name ||
+    !product?.notification
+  ) {
     return new Response("Error, missing data", { status: 400 });
   }
 
@@ -47,10 +50,10 @@ const getAllScraping = async (env) => {
     const product = data[i];
     const isAvailable = await scraping(product);
     if (isAvailable) {
-      await sendMessageToTelegramBot(
-        env,
-        `${product.name} talla ${product.size} está disponible`
-      );
+      const response = await sendNotification(product, env);
+      if (response.ok) {
+        await deleteProduct(user, product);
+      }
     }
   }
 

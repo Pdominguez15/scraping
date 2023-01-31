@@ -4,4 +4,4 @@ export * from "./isStradivariusUrl";
 export * from "./isUrlValid";
 export * from "./isZaraUrl";
 export * from "./scraping/scraping";
-export * from "./telegram/sendMessage";
+export * from "./sendNotification";

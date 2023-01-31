@@ -26,6 +26,13 @@ export const insertProduct = async (user, product) => {
   return bd.insertOne(product);
 };
 
+export const deleteProduct = async (user, product) => {
+  const client = user.mongoClient("mongodb-atlas");
+  const bd = client.db("cloudflare").collection("todos");
+
+  return bd.deleteOne(product);
+};
+
 export const disconnectBD = async (user) => {
   await user.logOut();
 };
